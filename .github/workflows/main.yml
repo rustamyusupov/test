@@ -1,0 +1,23 @@
+# BEGIN
+name: test-coverage
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup jest
+        run: npm ci
+      - name: Generate coverage report
+        run: npm test:coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1
+        with:
+          directory: ./coverage/
+          files: ./coverage-final.json
+# END
